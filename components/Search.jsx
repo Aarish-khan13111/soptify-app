@@ -3,7 +3,7 @@ import { MdOutlineShortText } from "react-icons/md";
 
 const Search = ({ search, setSearch }) => {
   return (
-    <div className="max-w-[1150px] ml-24  bg-black rounded-full border-2 border-[#333333] p-1.5 px-5 pr-8 flex items-center">
+    <div className="max-w-[1050px] bg-black rounded-full border-2 border-[#333333] p-1.5 px-5 pr-8 flex items-center">
       <div className="h-4 w-4 rounded-full border-2 flex-shrink-0 animate-pulse" />
       <input
         type="text"

@@ -1,9 +1,7 @@
 import { ChartBarIcon, ClockIcon, HomeIcon } from "@heroicons/react/24/solid";
 import { FaMicrophoneAlt } from "react-icons/fa";
-import { CiLogout } from "react-icons/ci";
 import { RiCompassFill } from "react-icons/ri";
 import Image from "next/image";
-import { signOut } from "next-auth/react";
 
 function Sidebar() {
   return (
@@ -15,10 +13,6 @@ function Sidebar() {
         height="56"
       />
       <div className="flex flex-col space-y-8">
-        <CiLogout
-          onClick={() => signOut()}
-          className="sidebarIcon text-white h-8"
-        />
         <HomeIcon className="sidebarIcon text-white opacity-[0.85]" />
         <RiCompassFill className="sidebarIcon text-2xl" />
         <FaMicrophoneAlt className="sidebarIcon ml-1" />

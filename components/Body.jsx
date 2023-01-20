@@ -5,8 +5,9 @@ import { FaChevronDown } from "react-icons/fa";
 import useSpotify from "../hooks/useSpotify";
 import Poster from "./Poster";
 import Search from "./Search";
+import Track from "./Track";
 
-const Body = () => {
+const Body = ({ chooseTrack }) => {
   const spotifyApi = useSpotify();
   const { data: session } = useSession();
   // const { accessToken } = session.user;
@@ -14,6 +15,7 @@ const Body = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [newReleases, setNewReleases] = useState([]);
 
+  //searching
   useEffect(() => {
     if (!search) return setSearchResults([]);
 
@@ -38,7 +40,30 @@ const Body = () => {
     return () => (cancel = true);
   }, [session, spotifyApi, search]);
 
-  // //Searching...
+  // //New Relaeases...
+
+  useEffect(() => {
+    let cancel = false;
+
+    if (spotifyApi.getAccessToken()) {
+      spotifyApi.getNewReleases().then((res) => {
+        if (cancel) return;
+        setNewReleases(
+          res.body.albums.items.map((track) => {
+            return {
+              id: track.id,
+              artist: track.artists.name,
+              title: track.name,
+              uri: track.uri,
+              albumUrl: track.images[0].url,
+            };
+          })
+        );
+      });
+    }
+    return () => (cancel = true);
+  }, [session, spotifyApi]);
+
   // useEffect(() => {
   //   if (!search) return setSearchResults([]);
   //   if (!accessToken) return;
@@ -50,21 +75,8 @@ const Body = () => {
   // console.log(searchResults);
 
   return (
-    <div className="flex flex-grow bg-black">
-      <header className="flex top-5">
-        <Search search={search} setSearch={setSearch} />
-        <div
-          className="flex items-center ml-24 bg-black space-x-3 opacity-90 hover:opacity-80 cursor-pointer
-        rounded-full p-1 pr-2 absolute right-8 text-white ">
-          <img
-            className="rounded-full w-8 h-8"
-            src={session?.user.image}
-            alt=""
-          />
-          <h2>{session?.user.name}</h2>
-          <FaChevronDown className="h-5 w-5" />
-        </div>
-      </header>
+    <section className="lg:min-h-[500px] bg-black ml-24 py-4 space-y-8 md:max-w-6xl flex-grow md:mr-2.5">
+      <Search search={search} setSearch={setSearch} />
       <div className="grid overflow-y-scroll scrollbar-hide h-96 py-4 grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-4 gap-y-8 p-4">
         {searchResults.length === 0
           ? newReleases
@@ -86,7 +98,35 @@ const Body = () => {
                 />
               ))}
       </div>
-    </div>
+
+      {/* tracks */}
+      <div className="w-full pr-11">
+        <h2 className="text-white font-bold mb-3">
+          {searchResults.length === 0 ? "New Releases" : "Tracks"}
+        </h2>
+        <div className="lg:min-h-[500px] space-y-3 border-2 border-[#262626] rounded-2xl p-3 bg-[#0D0D0D] overflow-y-scroll h-[1000px] md:h-96 scrollbar-hide">
+          {searchResults.length === 0
+            ? newReleases
+                .slice(4, newReleases.length)
+                .map((track) => (
+                  <Track
+                    key={track.id}
+                    track={track}
+                    chooseTrack={chooseTrack}
+                  />
+                ))
+            : searchResults
+                .slice(4, searchResults.length)
+                .map((track) => (
+                  <Track
+                    key={track.id}
+                    track={track}
+                    chooseTrack={chooseTrack}
+                  />
+                ))}
+        </div>
+      </div>
+    </section>
   );
 };
 
