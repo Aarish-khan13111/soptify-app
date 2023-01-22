@@ -100,7 +100,7 @@ const Body = ({ chooseTrack }) => {
       </div>
 
       {/* tracks */}
-      <div className="w-full pr-11">
+      <div className="w-full pr-8">
         <h2 className="text-white font-bold mb-3">
           {searchResults.length === 0 ? "New Releases" : "Tracks"}
         </h2>
