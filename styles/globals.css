@@ -6,13 +6,13 @@
 
 @layer base {
   body {
-    @apply font-body bg-gray-800;
+    @apply font-body bg-black;
   }
 }
 
 @layer components {
   .sidebarIcon {
-    @apply h-6 text-[#808080] cursor-pointer;
+    @apply h-7 text-[#808080] cursor-pointer;
   }
 
   .tag {

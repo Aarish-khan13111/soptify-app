@@ -3,6 +3,7 @@ import { getSession, useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
 import { FaChevronDown } from "react-icons/fa";
 import useSpotify from "../hooks/useSpotify";
+import Dropdown from "./Dropdown";
 import Poster from "./Poster";
 import Search from "./Search";
 import Track from "./Track";
@@ -63,7 +64,6 @@ const Body = ({ chooseTrack }) => {
     }
     return () => (cancel = true);
   }, [session, spotifyApi]);
-
   // useEffect(() => {
   //   if (!search) return setSearchResults([]);
   //   if (!accessToken) return;
@@ -75,7 +75,7 @@ const Body = ({ chooseTrack }) => {
   // console.log(searchResults);
 
   return (
-    <section className="lg:min-h-[500px] bg-black ml-24 py-4 space-y-8 md:max-w-6xl flex-grow md:mr-2.5">
+    <section className="lg:max-w-[1100px] bg-black ml-24 py-4 space-y-8 md:max-w-6xl flex-grow md:mr-2.5">
       <Search search={search} setSearch={setSearch} />
       <div className="grid overflow-y-scroll scrollbar-hide h-96 py-4 grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-4 gap-y-8 p-4">
         {searchResults.length === 0
@@ -104,7 +104,7 @@ const Body = ({ chooseTrack }) => {
         <h2 className="text-white font-bold mb-3">
           {searchResults.length === 0 ? "New Releases" : "Tracks"}
         </h2>
-        <div className="lg:min-h-[500px] space-y-3 border-2 border-[#262626] rounded-2xl p-3 bg-[#0D0D0D] overflow-y-scroll h-[1000px] md:h-96 scrollbar-hide">
+        <div className="lg:max-w-[1000px] space-y-3 border-2 border-[#262626] rounded-2xl p-3 bg-[#0D0D0D] overflow-y-scroll h-[1000px] md:h-96 scrollbar-hide">
           {searchResults.length === 0
             ? newReleases
                 .slice(4, newReleases.length)
