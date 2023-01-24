@@ -13,7 +13,7 @@ const Right = ({ chooseTrack }) => {
   const { data: session } = useSession();
   //   const { accessToken } = session;
   const [recentlyPlayed, setRecentlyPlayed] = useState([]);
-  const [MySavedTracks, setMySavedTracks] = useState([]);
+  const [MyPlaylist, setMyPlaylist] = useState([]);
 
   useEffect(() => {
     let cancel = false;
@@ -42,10 +42,11 @@ const Right = ({ chooseTrack }) => {
     if (spotifyApi.getAccessToken()) {
       spotifyApi.getMySavedTracks().then((res) => {
         if (cancel) return;
-        setMySavedTracks(
+        setMyPlaylist(
           res.body.items.map(({ track }) => {
             return {
               id: track.id,
+              artist: track.artists.name,
               title: track.name,
               uri: track.uri,
               albumUrl: track.album.images[0].url,
@@ -56,8 +57,6 @@ const Right = ({ chooseTrack }) => {
     }
     return () => (cancel = true);
   }, [session, spotifyApi]);
-
-  console.log("mylist", MySavedTracks);
 
   return (
     <section>
@@ -97,7 +96,7 @@ const Right = ({ chooseTrack }) => {
         </div>
 
         <div className="space-y-4 overflow-y-scroll overflow-x-hidden h-[250px] md:h-[350px] scrollbar-hide">
-          {recentlyPlayed.map((track, index) => (
+          {MyPlaylist.map((track, index) => (
             <RecentlyPlayed
               key={index}
               track={track}

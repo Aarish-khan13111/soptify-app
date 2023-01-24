@@ -64,6 +64,7 @@ const Body = ({ chooseTrack }) => {
     }
     return () => (cancel = true);
   }, [session, spotifyApi]);
+
   // useEffect(() => {
   //   if (!search) return setSearchResults([]);
   //   if (!accessToken) return;

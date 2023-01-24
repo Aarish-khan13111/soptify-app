@@ -98,7 +98,7 @@ function Player({ trackUri }) {
           sliderHandleColor: "#fff",
           errorColor: "#fff",
         }}
-        token={accessToken}
+        token={session}
         showSaveIcon
         callback={(state) => {
           setPlay(state.isPlaying);
